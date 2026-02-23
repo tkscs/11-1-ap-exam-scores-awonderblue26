@@ -1,0 +1,53 @@
+---
+title: "11_1_ap_exam_scores"
+format: html
+---
+
+```{r}
+library(tidyverse)
+library(janitor)
+```
+
+```{r}
+df = read_csv("ap_exam_scores_mean_3.11.csv") |> clean_names()
+```
+
+# Take a random sample of 10 students from a population that has a mean of 3.11
+
+```{r}
+# sample 10
+sample_of_10 = df |> sample_n(10)
+sample_of_10
+```
+
+```{r}
+# calculate the mean of the sample
+sample_of_10 |>
+  pull(ap_score) |> 
+  mean()
+```
+
+# Calculate 1000 sample means
+
+```{r}
+sample_10_students = function(i) {
+  # copy all the code from "Take a random sample of 10 students from a population that has a mean of 3.11" to here
+}
+
+sample_means = map_dbl(1:1000, sample_10_students)
+ggplot(NULL) +
+  aes(sample_means) +
+  geom_histogram(binwidth = .1)
+```
+
+# Calculate the p-value
+
+```{r}
+number_of_sample_means_above = sum(sample_means >= 3.8)
+total_number_of_sample_means = length(sample_means)
+pvalue = number_of_sample_means_above / total_number_of_sample_means
+pvalue
+```
+
+
+
